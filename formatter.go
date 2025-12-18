@@ -9,13 +9,13 @@ import (
 
 // LogEntry represents a log entry structure
 type LogEntry struct {
-	Time       time.Time `json:"time" xml:"time"`       // Time when the log occurred
-	Level      Level     `json:"level" xml:"level"`     // Log level (e.g., TRACE, INFO, ERROR, etc.)
-	Prefix     string    `json:"prefix" xml:"prefix"`   // Log prefix for distinguishing modules or subsystems, can be empty
-	File       string    `json:"file" xml:"file"`       // File path where the log is located (relative or formatted path)
-	Line       int       `json:"line" xml:"line"`       // Line number in the file where the log is located
-	Message    string    `json:"message" xml:"message"` // Log message content
-	CallerSkip int       `json:"-" xml:"-"`             // Stack depth for determining the call source location (file and line number)
+	Time       time.Time `json:"time" xml:"time"`                         // Time when the log occurred
+	Prefix     string    `json:"prefix,omitempty" xml:"prefix,omitempty"` // Log prefix for distinguishing modules or subsystems, can be empty
+	Level      Level     `json:"level" xml:"level"`                       // Log level (e.g., TRACE, INFO, ERROR, etc.)
+	File       string    `json:"file" xml:"file"`                         // File path where the log is located (relative or formatted path)
+	Line       int       `json:"line" xml:"line"`                         // Line number in the file where the log is located
+	Message    string    `json:"message" xml:"message"`                   // Log message content
+	CallerSkip int       `json:"-" xml:"-"`                               // Stack depth for determining the call source location (file and line number)
 }
 
 // Formatter defines a function type for formatting log entries
