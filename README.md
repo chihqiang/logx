@@ -1,61 +1,74 @@
-# logx
+English | [简体中文](README_zh.md)
 
-`logx` 是一个Go语言实现的简单、灵活的日志模块，提供了多级日志支持和彩色输出功能。
+<div align="center">
+<h1>logx</h1>
 
-## 功能特点
+[![Auth](https://img.shields.io/badge/Auth-chihqiang-ff69b4)](https://github.com/chihqiang)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/chihqiang/logx)](https://github.com/chihqiang/logx/pulls)
+[![Go Report Card](https://goreportcard.com/badge/github.com/chihqiang/logx)](https://goreportcard.com/report/github.com/chihqiang/logx)
+[![Release](https://img.shields.io/github/release/chihqiang/logx.svg?style=flat-square)](https://github.com/chihqiang/logx/releases)
+[![GitHub Pull Requests](https://img.shields.io/github/stars/chihqiang/logx)](https://github.com/chihqiang/logx/stargazers)
+[![HitCount](https://views.whatilearened.today/views/github/chihqiang/logx.svg)](https://github.com/chihqiang/logx)
+[![GitHub license](https://img.shields.io/github/license/chihqiang/logx)](https://github.com/chihqiang/logx/blob/main/LICENSE)
 
-- 支持4个基础日志级别（Debug、Info、Warn、Error）
-- 支持自定义日志级别（可在基础级别上进行偏移）
-- 彩色日志输出，不同级别显示不同颜色
-- 灵活的日志配置（可设置输出目标、前缀、格式化函数等）
-- 全局日志实例，方便快速使用
-- 完全并发安全的设计
-- 支持自定义日志格式化器
+<p> logx is a simple and flexible logging module implemented in Go, providing multi-level logging support and colored output functionality.</p>
 
-## 文件结构
+</div>
 
-- `level.go`: 定义日志级别枚举和相关方法
-- `log.go`: 提供全局日志实例和简化的日志函数
-- `logger.go`: 定义Logger结构体和核心实现
-- `formatter.go`: 定义日志格式化器接口和默认实现
+## Features
 
-## 日志级别
+- Supports 4 basic log levels (Debug, Info, Warn, Error)
+- Supports custom log levels (can be offset based on basic levels)
+- Colored log output, different levels display different colors
+- Flexible log configuration (can set output target, prefix, formatting function, etc.)
+- Global log instance for quick use
+- Fully concurrent-safe design
+- Support for custom log formatters
 
-logx 支持以下基础日志级别：
+## File Structure
 
-|   级别   | 枚举值 |   颜色    |           描述           |
-| :------: | :----: | :-------: | :----------------------: |
-|  Error   |   8    | 亮红色加粗 |  错误信息，影响功能运行  |
-|   Warn   |   4    |  粗黄色   |      警告，潜在问题      |
-|   Info   |   0    |    绿色   |       普通运行信息       |
-|  Debug   |  -4    |    蓝色   |     调试信息，最详细     |
+- `level.go`: Defines log level enumeration and related methods
+- `log.go`: Provides global log instance and simplified log functions
+- `logger.go`: Defines Logger struct and core implementation
+- `formatter.go`: Defines log formatter interface and default implementation
 
-**自定义级别**：logx 支持在基础级别上进行偏移，例如 `LevelInfo+1` 或 `LevelWarn-1`，这样可以实现更细粒度的日志控制。自定义级别的字符串表示会在基础级别后加上偏移量，如 `INFO+1`、`WARN-1` 等。
+## Log Levels
 
-## 使用示例
+logx supports the following basic log levels:
 
-### 全局日志实例
+|  Level  | Value |    Color     |          Description          |
+| :-----: | :---: | :----------: | :---------------------------: |
+|  Error  |   8   | Bold bright red | Error information affecting function operation |
+|   Warn  |   4   |   Bold yellow   |       Warning, potential problem       |
+|   Info  |   0   |      Green      |       Normal running information       |
+|  Debug  |  -4   |      Blue       |     Debug information, most detailed     |
+
+**Custom Levels**: logx supports offsets based on basic levels, such as `LevelInfo+1` or `LevelWarn-1`, which enables more granular log control. The string representation of custom levels will include the offset after the basic level, like `INFO+1`, `WARN-1`, etc.
+
+## Usage Examples
+
+### Global Log Instance
 
 ```go
 import "github.com/chihqiang/logx"
 
-// 使用不同级别的日志
-logx.Info("这是一条信息日志")
-logx.Warn("这是一条警告日志")
-logx.Error("这是一条错误日志")
-logx.Debug("这是一条调试日志")
+// Use different log levels
+logx.Info("This is an info log")
+logx.Warn("This is a warning log")
+logx.Error("This is an error log")
+logx.Debug("This is a debug log")
 
-// 设置全局日志输出目标
+// Set global log output target
 logx.SetOutput(os.Stdout)
 
-// 设置全局日志前缀
+// Set global log prefix
 logx.SetPrefix("[APP]")
 
-// 使用自定义级别
-logx.Log(logx.LevelInfo+1, "这是一条自定义级别的信息日志")
+// Use custom level
+logx.Log(logx.LevelInfo+1, "This is a custom level info log")
 ```
 
-### 创建自定义日志实例
+### Create Custom Log Instance
 
 ```go
 package main
@@ -66,24 +79,24 @@ import (
 )
 
 func main() {
-	// 创建自定义日志实例，输出到标准错误
+	// Create custom log instance, output to standard error
 	logger := logx.New(os.Stderr)
 	
-	// 设置日志前缀
+	// Set log prefix
 	logger.SetPrefix("[MYAPP]")
 	
-	// 使用自定义日志实例
-	logger.Info("这是使用自定义日志实例的信息")
-	logger.Debug("这是调试信息")
-	logger.Warn("这是警告信息")
-	logger.Error("这是错误信息")
+	// Use custom log instance
+	logger.Info("This is information using custom log instance")
+	logger.Debug("This is debug information")
+	logger.Warn("This is warning information")
+	logger.Error("This is error information")
 	
-	// 使用自定义日志级别
-	logger.Log(logx.LevelDebug-1, "这是比Debug更详细的日志")
+	// Use custom log level
+	logger.Log(logx.LevelDebug-1, "This is more detailed than Debug level")
 }
 ```
 
-### 自定义日志格式化器
+### Custom Log Formatter
 
 ```go
 package main
@@ -96,49 +109,67 @@ import (
 
 func main() {
 	logger := logx.New(os.Stdout)
-	// 设置自定义格式化器
+	// Set custom formatter
 	logger.SetFormatter(func(entry logx.LogEntry) []byte {
 		marshal, _ := json.Marshal(entry)
 		return marshal
 	})
-	// 输出日志
-	logger.Info("使用自定义格式化器的日志")
+	// Output log
+	logger.Info("Log using custom formatter")
 }
 ```
 
-## 核心API
+## Core API
 
-### 全局日志函数
+### Global Log Functions
 
-- `Debug(format string, v ...any)` - 记录Debug级别日志
-- `Info(format string, v ...any)` - 记录Info级别日志  
-- `Warn(format string, v ...any)` - 记录Warn级别日志
-- `Error(format string, v ...any)` - 记录Error级别日志
-- `Log(level Level, format string, v ...any)` - 记录指定级别的日志
-- `SetOutput(w io.Writer)` - 设置日志输出目标
-- `SetPrefix(p string)` - 设置日志前缀
-- `SetFormatter(fn Formatter)` - 设置日志格式化函数
+- `Debug(format string, v ...any)` - Record Debug level log
+- `Info(format string, v ...any)` - Record Info level log  
+- `Warn(format string, v ...any)` - Record Warn level log
+- `Error(format string, v ...any)` - Record Error level log
+- `Log(level Level, format string, v ...any)` - Record log at specified level
+- `SetOutput(w io.Writer)` - Set log output target
+- `SetPrefix(p string)` - Set log prefix
+- `SetFormatter(fn Formatter)` - Set log formatting function
 
-### Logger结构体方法
+### Logger Struct Methods
 
-- `New(w io.Writer) *Logger` - 创建新的日志实例
-- `(*Logger) SetOutput(w io.Writer)` - 设置日志输出目标
-- `(*Logger) SetPrefix(p string)` - 设置日志前缀
-- `(*Logger) SetFormatter(fn Formatter)` - 设置日志格式化函数
-- `(*Logger) Debug(format string, v ...any)` - 输出Debug级别日志
-- `(*Logger) Info(format string, v ...any)` - 输出Info级别日志
-- `(*Logger) Warn(format string, v ...any)` - 输出Warn级别日志
-- `(*Logger) Error(format string, v ...any)` - 输出Error级别日志
-- `(*Logger) Log(level Level, format string, v ...any) error` - 输出指定级别的日志
+- `New(w io.Writer) *Logger` - Create a new log instance
+- `(*Logger) SetOutput(w io.Writer)` - Set log output target
+- `(*Logger) SetPrefix(p string)` - Set log prefix
+- `(*Logger) SetFormatter(fn Formatter)` - Set log formatting function
+- `(*Logger) Debug(format string, v ...any)` - Output Debug level log
+- `(*Logger) Info(format string, v ...any)` - Output Info level log
+- `(*Logger) Warn(format string, v ...any)` - Output Warn level log
+- `(*Logger) Error(format string, v ...any)` - Output Error level log
+- `(*Logger) Log(level Level, format string, v ...any) error` - Output log at specified level
 
-## 依赖
+## Dependencies
 
-- `github.com/fatih/color`: 提供终端彩色输出功能
-- Go标准库 `fmt`, `io`, `os`, `runtime`, `sync`, `time`
+- `github.com/fatih/color`: Provides terminal colored output functionality
+- Go standard libraries: `fmt`, `io`, `os`, `runtime`, `sync`, `time`
 
-## 注意事项
+## Performance
 
-- 所有日志方法都是线程安全的，可以在并发环境中使用
-- 默认日志格式化器会显示时间戳、日志级别、调用文件和行号以及日志内容
-- 可以通过自定义Formatter实现完全个性化的日志格式
-- 日志输出目标可以是任意实现了io.Writer接口的对象，如标准输出、文件等
+### Benchmark Results
+
+| Test Case | Operations per Second | Time per Operation |
+| :-------: | :------------------: | :----------------: |
+| Logger Parallel | 450,409 ops/sec | 2,609 ns/op |
+| Global Logger Parallel | 653,130 ops/sec | 2,865 ns/op |
+| Logger Single | 231,024 ops/sec | 4,875 ns/op |
+| Global Logger Single | 207,585 ops/sec | 5,038 ns/op |
+
+### Throughput Test
+
+- **Test Environment**: 100 goroutines, each writing 1000 log entries
+- **Total Logs**: 100,000 entries
+- **Total Time**: ~198 ms
+- **Throughput**: **504,000 logs/second**
+
+## Notes
+
+- All log methods are thread-safe and can be used in concurrent environments
+- The default log formatter displays timestamp, log level, calling file and line number, and log content
+- Completely personalized log formats can be implemented through custom Formatter
+- The log output target can be any object that implements the io.Writer interface, such as standard output, files, etc.
